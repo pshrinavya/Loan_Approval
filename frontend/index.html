@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>LoanPredict AI</title>
+
+    <link rel="stylesheet"
+        href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+
+<body>
+
+
+<!-- ========================================= -->
+<!-- SIDEBAR -->
+<!-- ========================================= -->
+
+<aside class="sidebar">
+
+    <div class="logo-area">
+
+        <div class="logo">
+            LP
+        </div>
+
+        <div>
+
+            <h2>LoanPredict</h2>
+
+            <span>AI Intelligence</span>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a
+            class="nav-link active"
+            href="#dashboard"
+            data-section="dashboard"
+        >
+            <span>▦</span>
+            Dashboard
+        </a>
+
+
+        <a
+            class="nav-link"
+            href="#predictions"
+            data-section="predictions"
+        >
+            <span>◉</span>
+            Predictions
+        </a>
+
+
+        <a
+            class="nav-link"
+            href="#analytics"
+            data-section="analytics"
+        >
+            <span>◌</span>
+            Analytics
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-footer">
+
+        <div class="online-dot"></div>
+
+        <div>
+
+            <strong>Model Online</strong>
+
+            <small>Logistic Regression</small>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+
+<!-- ========================================= -->
+<!-- MAIN -->
+<!-- ========================================= -->
+
+<main class="main">
+
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div>
+
+            <div class="section-label">
+                LOAN INTELLIGENCE
+            </div>
+
+            <h1>
+                Loan Approval Dashboard
+            </h1>
+
+            <p>
+                AI-powered analysis of loan applications
+            </p>
+
+        </div>
+
+
+        <div class="connection">
+
+            <span class="online-dot"></span>
+
+            <div>
+
+                <strong>API Connected</strong>
+
+                <small>FastAPI • Live</small>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- ========================================= -->
+    <!-- KPI CARDS -->
+    <!-- ========================================= -->
+
+    <section class="kpi-grid" >
+
+
+        <div class="kpi-card">
+
+            <div class="kpi-top">
+
+                <span>
+                    TOTAL APPLICATIONS
+                </span>
+
+                <div class="kpi-icon purple">
+                    ▣
+                </div>
+
+            </div>
+
+            <div
+                id="totalApplications"
+                class="kpi-number"
+            >
+                —
+            </div>
+
+            <div class="kpi-bottom">
+
+                <span class="mini-line">
+                    ━━━━━━━━━
+                </span>
+
+                <span>
+                    Dataset records
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="kpi-card">
+
+            <div class="kpi-top">
+
+                <span>
+                    APPROVAL RATE
+                </span>
+
+                <div class="kpi-icon green">
+                    ✓
+                </div>
+
+            </div>
+
+            <div
+                id="approvalRate"
+                class="kpi-number"
+            >
+                —
+            </div>
+
+            <div class="kpi-bottom">
+
+                <span class="green-text">
+                    ● Dataset
+                </span>
+
+                <span>
+                    approval distribution
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="kpi-card">
+
+            <div class="kpi-top">
+
+                <span>
+                    AVG. LOAN AMOUNT
+                </span>
+
+                <div class="kpi-icon blue">
+                    ₹
+                </div>
+
+            </div>
+
+            <div
+                id="avgLoanAmount"
+                class="kpi-number"
+            >
+                —
+            </div>
+
+            <div class="kpi-bottom">
+
+                <span>
+                    From dataset
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="kpi-card model-card">
+
+            <div class="kpi-top">
+
+                <span>
+                    ACTIVE MODEL
+                </span>
+
+                <div class="kpi-icon purple">
+                    AI
+                </div>
+
+            </div>
+
+            <div class="model-name">
+                Logistic Regression
+            </div>
+
+            <div class="kpi-bottom">
+
+                <span class="green-text">
+                    ● Active
+                </span>
+
+                <span>
+                    ML Pipeline
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ========================================= -->
+    <!-- MAIN DASHBOARD -->
+    <!-- ========================================= -->
+
+    <section class="dashboard" id="dashboard">
+
+
+        <!-- ===================================== -->
+        <!-- FORM -->
+        <!-- ===================================== -->
+
+        <div class="card application-card">
+
+
+            <div class="card-heading">
+
+                <div>
+
+                    <div class="section-label">
+                        NEW APPLICATION
+                    </div>
+
+                    <h2>
+                        Applicant Profile
+                    </h2>
+
+                    <p>
+                        Enter the applicant's information
+                        to generate an AI assessment.
+                    </p>
+
+                    <button id="resetBtn" class="reset-btn">
+                        ↻ New Application
+                    </button>
+
+                </div>
+
+
+                <div class="form-badge">
+                    AI Analysis
+                </div>
+
+            </div>
+
+
+
+            <form id="loanForm">
+
+
+                <!-- PERSONAL -->
+
+                <div class="form-block">
+
+                    <div class="block-title">
+
+                        <span>01</span>
+
+                        Personal & Employment
+
+                    </div>
+
+
+                    <div class="input-grid">
+
+
+                        <div class="input-group">
+
+                            <label>
+                                Employment Type
+                            </label>
+
+                            <select
+                                id="Employment_Type"
+                                required
+                            >
+
+                                <option value="">
+                                    Select employment
+                                </option>
+
+                                <option value="Salaried">
+                                    Salaried
+                                </option>
+
+                                <option value="Self-Employed">
+                                    Self-Employed
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <div class="input-group">
+
+                            <label>
+                                Employment Duration
+                            </label>
+
+                            <input
+                                id="Employment_Duration"
+                                type="number"
+                                min="0"
+                                placeholder="Years"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <div class="input-group">
+
+                            <label>
+                                Dependents
+                            </label>
+
+                            <input
+                                id="Dependents"
+                                type="number"
+                                min="0"
+                                placeholder="e.g. 1"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <div class="input-group">
+
+                            <label>
+                                Property Area
+                            </label>
+
+                            <select
+                                id="Property_Area"
+                                required
+                            >
+
+                                <option value="">
+                                    Select area
+                                </option>
+
+                                <option value="Urban">
+                                    Urban
+                                </option>
+
+                                <option value="Semiurban">
+                                    Semiurban
+                                </option>
+
+                                <option value="Rural">
+                                    Rural
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- FINANCIAL -->
+
+                <div class="form-block">
+
+                    <div class="block-title">
+
+                        <span>02</span>
+
+                        Financial Profile
+
+                    </div>
+
+
+                    <div class="input-grid">
+
+
+                        <div class="input-group">
+
+                            <label>
+                                Credit Score
+                            </label>
+
+                            <input
+                                id="Credit_Score"
+                                type="number"
+                                min="0"
+                                max="1000"
+                                placeholder="e.g. 720"
+                                required
+                            >
+
+                            <small>
+                                Higher scores generally indicate
+                                stronger credit history.
+                            </small>
+
+                        </div>
+
+
+
+                        <div class="input-group">
+
+                            <label>
+                                Applicant Income
+                            </label>
+
+                            <input
+                                id="Applicant_Income"
+                                type="number"
+                                min="0"
+                                placeholder="e.g. 6000"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <div class="input-group">
+
+                            <label>
+                                Coapplicant Income
+                            </label>
+
+                            <input
+                                id="Coapplicant_Income"
+                                type="number"
+                                min="0"
+                                placeholder="e.g. 2000"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <div class="input-group">
+
+                            <label>
+                                Debt-to-Income Ratio
+                            </label>
+
+                            <input
+                                id="Debt_to_Income_Ratio"
+                                type="number"
+                                min="0"
+                                step="0.01"
+                                placeholder="e.g. 0.25"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- LOAN -->
+
+                <div class="form-block">
+
+                    <div class="block-title">
+
+                        <span>03</span>
+
+                        Loan Details
+
+                    </div>
+
+
+                    <div class="input-grid">
+
+
+                        <div class="input-group">
+
+                            <label>
+                                Loan Amount
+                            </label>
+
+                            <input
+                                id="Loan_Amount"
+                                type="number"
+                                min="0"
+                                placeholder="e.g. 150000"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <div class="input-group">
+
+                            <label>
+                                Loan Term
+                            </label>
+
+                            <input
+                                id="Loan_Amount_Term"
+                                type="number"
+                                min="1"
+                                placeholder="e.g. 360 months"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- BUTTON -->
+
+                <button
+                    class="predict-button"
+                    type="submit"
+                    id="predictButton"
+                >
+
+                    <span>
+
+                        <span class="button-icon">
+                            ✦
+                        </span>
+
+                        Analyze Application
+
+                    </span>
+
+
+                    <span class="arrow">
+                        →
+                    </span>
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+
+        <!-- ===================================== -->
+        <!-- PREDICTION -->
+        <!-- ===================================== -->
+
+        <div class="right-side">
+
+
+            <div class="card prediction-card">
+
+
+                <div class="prediction-header">
+
+                    <div>
+
+                        <div class="section-label">
+                            AI PREDICTIVE ANALYSIS
+                        </div>
+
+                        <h2>
+                            Prediction Result
+                        </h2>
+
+                    </div>
+
+
+                    <span class="model-tag">
+                        Logistic Regression
+                    </span>
+
+                </div>
+
+
+
+                <!-- PLACEHOLDER -->
+
+                <div
+                    id="predictionPlaceholder"
+                    class="prediction-placeholder"
+                >
+
+                    <div class="ai-orb">
+
+                        <div class="orb-inner">
+                            ✦
+                        </div>
+
+                    </div>
+
+
+                    <h3>
+                        Ready to analyze
+                    </h3>
+
+                    <p>
+                        Complete the applicant profile
+                        and let the model estimate the
+                        approval probability.
+                    </p>
+
+                    <div id="loadingMessage" class="loading-message hidden">
+                        ◌ Analyzing application...
+                    </div>
+
+                </div>
+
+
+
+                <!-- RESULT -->
+
+                <div
+                    id="predictionResult"
+                    class="prediction-result hidden"
+                >
+
+
+                    <div
+                        id="resultBanner"
+                        class="result-banner"
+                    >
+
+                        <div
+                            id="resultIcon"
+                            class="result-icon"
+                        >
+                            ✓
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                MODEL ASSESSMENT
+                            </span>
+
+                            <strong
+                                id="predictionText"
+                            >
+                                Approved
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="chart-area">
+
+                        <canvas
+                            id="predictionChart"
+                        ></canvas>
+
+
+                        <div class="chart-label">
+
+                            <strong
+                                id="approvalPercent"
+                            >
+                                0%
+                            </strong>
+
+                            <span>
+                                approval
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="probabilities">
+
+
+                        <div class="probability approved">
+
+                            <div>
+
+                                <span>
+                                    APPROVAL
+                                </span>
+
+                                <strong
+                                    id="approvalProbability"
+                                >
+                                    0%
+                                </strong>
+
+                            </div>
+
+                            <div class="probability-bar">
+
+                                <div
+                                    id="approvalBar"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="probability rejected">
+
+                            <div>
+
+                                <span>
+                                    REJECTION
+                                </span>
+
+                                <strong
+                                    id="rejectionProbability"
+                                >
+                                    0%
+                                </strong>
+
+                            </div>
+
+                            <div class="probability-bar">
+
+                                <div
+                                    id="rejectionBar"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- MODEL CONFIDENCE -->
+
+                    <div class="confidence-box">
+
+                        <div class="confidence-icon">
+                            ◉
+                        </div>
+
+                        <div>
+
+                            <span class="confidence-label">
+                                MODEL CONFIDENCE
+                            </span>
+
+                            <strong id="confidenceText">
+                                —
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- AI INSIGHT -->
+
+                    <div class="ai-insight">
+
+                        <div class="insight-icon">
+                            ✦
+                        </div>
+
+                        <div class="insight-content">
+
+                            <strong>
+                                AI Assessment
+                            </strong>
+
+                            <p id="aiInsightText">
+                                The model has completed
+                                its assessment.
+                            </p>
+
+                            <div class="confidence-row">
+
+                                <span>Model Confidence</span>
+
+                                <strong id="confidenceText">
+                                    —
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- MODEL CARD -->
+
+            <div class="card model-info-card">
+
+                <div class="model-symbol">
+                    AI
+                </div>
+
+                <div>
+
+                    <div class="model-title">
+                        Machine Learning Engine
+                    </div>
+
+                    <p>
+                        Predictions are generated using
+                        your trained Logistic Regression
+                        pipeline and preprocessing steps.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+    <section class="history-card" id="predictions">
+        <div class="history-header">
+            <div>
+                <span class="eyebrow">RECENT ACTIVITY</span>
+                <h2>Prediction History</h2>
+                <p>Your recent loan prediction results.</p>
+            </div>
+
+            <div class="history-actions">
+
+                <span class="history-count" id="historyCount">
+                    0 predictions
+                </span>
+
+                <button
+                    id="clearHistoryBtn"
+                    class="clear-history-btn"
+                >
+                    🗑 Clear History
+                </button>
+
+            </div>
+        </div>
+
+        <div class="history-table-wrapper">
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Time</th>
+                        <th>Result</th>
+                        <th>Approval</th>
+                        <th>Rejection</th>
+                        <th>Loan Amount</th>
+                    </tr>
+                </thead>
+
+                <tbody id="historyBody">
+                    <tr id="emptyHistory">
+                        <td colspan="6" class="empty-history">
+                            No predictions yet
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="card metrics-card" id="analytics">
+
+        <div class="metrics-header">
+
+            <div>
+                <span class="section-label">MODEL PERFORMANCE</span>
+
+                <h2>Logistic Regression Metrics</h2>
+
+                <p>
+                    Performance of the trained model on the test dataset.
+                </p>
+            </div>
+
+            <span class="model-tag">
+                ML Evaluation
+            </span>
+
+        </div>
+
+
+        <div class="metrics-grid">
+
+            <div class="metric-box">
+                <span>ACCURACY</span>
+                <strong id="metricAccuracy">—</strong>
+            </div>
+
+
+            <div class="metric-box">
+                <span>PRECISION</span>
+                <strong id="metricPrecision">—</strong>
+            </div>
+
+
+            <div class="metric-box">
+                <span>RECALL</span>
+                <strong id="metricRecall">—</strong>
+            </div>
+
+
+            <div class="metric-box">
+                <span>F1 SCORE</span>
+                <strong id="metricF1">—</strong>
+            </div>
+
+
+            <div class="metric-box">
+                <span>ROC-AUC</span>
+                <strong id="metricRocAuc">—</strong>
+            </div>
+
+        </div>
+        <div class="metrics-chart-container">
+
+        <div class="chart-heading">
+
+            <div>
+                <span class="section-label">
+                    PERFORMANCE VISUALIZATION
+                </span>
+
+                <h3>
+                    Model Evaluation
+                </h3>
+            </div>
+
+            <span class="model-tag">
+                Test Dataset
+            </span>
+
+        </div>
+
+        <div class="metrics-chart">
+
+            <canvas id="metricsChart"></canvas>
+
+        </div>
+
+    </div>
+
+    </section>
+
+
+
+    <!-- ========================================= -->
+    <!-- FOOTER -->
+    <!-- ========================================= -->
+
+    <footer>
+
+        <span>
+            LoanPredict AI
+        </span>
+
+        <span>
+            Machine Learning • FastAPI • Logistic Regression
+        </span>
+
+    </footer>
+
+
+</main>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
